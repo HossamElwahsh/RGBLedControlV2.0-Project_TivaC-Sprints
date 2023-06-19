@@ -9,6 +9,7 @@
 /- INCLUDES 
 /----------------------------------------------------------*/
 #include "systick_interface.h"
+#include "systick_linking_config.h"
 #include "gpio_interface.h"
 
 #include "btn_interface.h"
@@ -34,16 +35,12 @@ en_btn_status_code_t_ btn_init(st_btn_config_t_* ptr_st_btn_config)
 {
 	en_btn_status_code_t_ lo_en_btn_status = BTN_STATUS_OK;
 	st_gpio_cfg_t btn_pin_cfg;
-	st_systick_cfg_t lo_stk_cfg;
-	
+
 	if (NULL_PTR != ptr_st_btn_config)
 	{
 		btn_pin_cfg.port = (en_gpio_port_t) ptr_st_btn_config->en_btn_port;
 		btn_pin_cfg.pin  = (en_gpio_pin_t)  ptr_st_btn_config->en_btn_pin;
 		
-		lo_stk_cfg.bool_systick_int_enabled = FALSE;
-		lo_stk_cfg.en_systick_clk_src = CLK_SRC_PIOSC;
-
 		switch (ptr_st_btn_config->en_btn_pull_type)
 		{
 			case BTN_INTERNAL_PULL_UP	 :
@@ -59,7 +56,7 @@ en_btn_status_code_t_ btn_init(st_btn_config_t_* ptr_st_btn_config)
 		/* Initialize the button pin */
 		gpio_pin_init(&btn_pin_cfg);
 		
-		systick_init(&lo_stk_cfg);
+		systick_init(&gl_st_systick_cfg_0);
 		
 		/* Set the button state */
 		ptr_st_btn_config->en_btn_activation = BTN_ACTIVATED;

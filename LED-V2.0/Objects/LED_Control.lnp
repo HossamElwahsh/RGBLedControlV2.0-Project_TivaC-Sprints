@@ -1,6 +1,7 @@
 --cpu=Cortex-M4.fp.sp
 ".\objects\gpio_program.o"
 ".\objects\systick_program.o"
+".\objects\systick_linking_config.o"
 ".\objects\led_program.o"
 ".\objects\btn_program.o"
 ".\objects\app.o"

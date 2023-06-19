@@ -13,6 +13,8 @@
 #include "app.h"
 #include "led_interface.h"
 #include "btn_interface.h"
+#include "systick_interface.h"
+#include "systick_linking_config.h"
 
 /*
  * Private Typedefs */
@@ -62,6 +64,7 @@ en_app_error_t app_init(void)
     en_app_error_t en_app_error_retval = APP_OK;
     en_btn_status_code_t_ en_btn_status_code = BTN_STATUS_OK;
     en_led_error_t_ en_led_error = LED_OK;
+    en_systick_error_t en_systick_error = ST_OK;
 
     /* init RGB LED */
 
@@ -80,6 +83,10 @@ en_app_error_t app_init(void)
     // init button
     en_btn_status_code = btn_init(&gl_st_user_btn_cfg);
     if(BTN_STATUS_OK != en_btn_status_code) en_app_error_retval = APP_FAIL;
+
+    // Init Systick
+    en_systick_error = systick_init(&gl_st_systick_cfg_0);
+    if(ST_OK != en_systick_error) en_app_error_retval = APP_FAIL;
 
     return en_app_error_retval;
 }

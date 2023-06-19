@@ -30,4 +30,4 @@ add_executable(shared
         LED-V2.0/led_interface.h
         LED-V2.0/main.c
         LED-V2.0/MCAL/systick/systick_program.c
-        LED-V2.0/HAL/btn/btn_program.c)
+        LED-V2.0/HAL/btn/btn_program.c LED-V2.0/MCAL/systick/systick_linking_config.c LED-V2.0/MCAL/systick/systick_linking_config.h)
