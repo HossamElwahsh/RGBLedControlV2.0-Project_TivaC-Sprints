@@ -10,8 +10,8 @@
 
 
 ## Quick Links
-- `Video` 👉 Youtube - in progress
-- `Project Hex` 👉 TBC
+- `Video` 👉 Youtube - uploading
+- `Project Hex` 👉 [LED_Control.hex](LED-V2.0/Objects/LED_Control.hex)
 - `Documentation` 👉 [Google Docs](https://docs.google.com/document/d/11W93RY6OmI8ad2eAT02Lx71EFzYXv_iCN_bzJ6KNIy0/edit?usp=sharing) 👉 PDF - uploading
 - `Team Backlog / Test Protocol` 👉 [Google Sheets](https://docs.google.com/spreadsheets/d/1NoLEc5Sk5aW1h5KqDCW50kSdbQppFpclcKfD8z8wE_4/edit?usp=sharing) 👉 Excel File - uploading 
 
