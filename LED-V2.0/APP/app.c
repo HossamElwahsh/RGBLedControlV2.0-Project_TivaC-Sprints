@@ -148,6 +148,7 @@ void app_start(void)
                 led_off(RED_LED_PORT, RED_LED_PIN);
                 led_off(GREEN_LED_PORT, GREEN_LED_PIN);
                 led_off(BLUE_LED_PORT, BLUE_LED_PIN);
+                gl_en_app_state = IDLE;
                 break;
             }
             case STATES_TOTAL:
