@@ -20,10 +20,17 @@
  * Private Typedefs */
 typedef enum{
     ALL_OFF = 0 ,
-    RED_ON      ,
-    GREEN_ON    ,
-    BLUE_ON     ,
-    ALL_ON      ,
+    RED_LED      ,
+    GREEN_LED    ,
+    BLUE_LED     ,
+    ALL_LEDS      ,
+    SUB_STATES_TOTAL
+}en_app_sub_state_t;
+
+typedef enum{
+    IDLE        = 0 ,   // Idle Doing nothing
+    SWITCHING       ,   // Switching sub-state
+    TURNING_OFF     ,   // Turn off LEDs
     STATES_TOTAL
 }en_app_state_t;
 
@@ -44,7 +51,8 @@ typedef enum{
 
 /*
  * Private Variables */
-static en_app_state_t gl_u8_app_state = ALL_OFF;
+static en_app_state_t gl_en_app_state = IDLE;
+static en_app_sub_state_t gl_en_app_sub_state = ALL_OFF;
 
 static st_btn_config_t_ gl_st_user_btn_cfg = {
         .en_btn_port = USER_BTN_PORT,
@@ -52,6 +60,9 @@ static st_btn_config_t_ gl_st_user_btn_cfg = {
         .en_btn_activation = BTN_ACTIVATED,
         .en_btn_pull_type = BTN_INTERNAL_PULL_UP
 };
+
+static void app_switch_state(void);
+static void app_systick_cb(void);
 
 /**
  * @brief                      : Initializes the required modules by the app
@@ -101,60 +112,104 @@ void app_start(void)
 
         if(BTN_STATE_PRESSED == en_btn_state)
         {
-            if(ALL_ON == gl_u8_app_state)
+            if(ALL_LEDS == gl_en_app_sub_state)
             {
-                gl_u8_app_state = ALL_OFF;
+                gl_en_app_sub_state = ALL_OFF;
             }
             else
             {
-                gl_u8_app_state += 1;
+                gl_en_app_sub_state += 1;
             }
+
+            // set app state -> switching
+            gl_en_app_state = SWITCHING;
         }
         else
         {
             /* Do Nothing */
         }
 
-        switch (gl_u8_app_state) {
+        switch (gl_en_app_state) {
 
-            case ALL_OFF:
+            case IDLE:
             {
+                /* Do Nothing */
+                break;
+            }
+            case SWITCHING:
+            {
+                app_switch_state();
+                break;
+            }
+            case TURNING_OFF:
+            {
+                // todo - improve
                 led_off(RED_LED_PORT, RED_LED_PIN);
                 led_off(GREEN_LED_PORT, GREEN_LED_PIN);
                 led_off(BLUE_LED_PORT, BLUE_LED_PIN);
                 break;
             }
-            case RED_ON:
-            {
-                led_on(RED_LED_PORT, RED_LED_PIN);
-                break;
-            }
-            case GREEN_ON:
-            {
-                led_off(RED_LED_PORT, RED_LED_PIN);
-                led_on(GREEN_LED_PORT, GREEN_LED_PIN);
-                break;
-            }
-            case BLUE_ON:
-            {
-                led_off(GREEN_LED_PORT, GREEN_LED_PIN);
-                led_on(BLUE_LED_PORT, BLUE_LED_PIN);
-                break;
-            }
-            case ALL_ON:
-            {
-                led_on(RED_LED_PORT, RED_LED_PIN);
-                led_on(GREEN_LED_PORT, GREEN_LED_PIN);
-                led_on(BLUE_LED_PORT, BLUE_LED_PIN);
-                break;
-            }
             case STATES_TOTAL:
             default:
             {
-                // bad state, reset to ALL_OFF
-                gl_u8_app_state = ALL_OFF;
+                /* Bad state reset to idle */
+                gl_en_app_state  = IDLE;
                 break;
             }
         }
+
     }
+}
+
+static void app_switch_state(void)
+{
+    switch (gl_en_app_sub_state) {
+
+        case ALL_OFF:
+        {
+            led_off(RED_LED_PORT, RED_LED_PIN);
+            led_off(GREEN_LED_PORT, GREEN_LED_PIN);
+            led_off(BLUE_LED_PORT, BLUE_LED_PIN);
+            break;
+        }
+        case RED_LED:
+        {
+            led_on(RED_LED_PORT, RED_LED_PIN);
+            break;
+        }
+        case GREEN_LED:
+        {
+            led_off(RED_LED_PORT, RED_LED_PIN);
+            led_on(GREEN_LED_PORT, GREEN_LED_PIN);
+            break;
+        }
+        case BLUE_LED:
+        {
+            led_off(GREEN_LED_PORT, GREEN_LED_PIN);
+            led_on(BLUE_LED_PORT, BLUE_LED_PIN);
+            break;
+        }
+        case ALL_LEDS:
+        {
+            led_on(RED_LED_PORT, RED_LED_PIN);
+            led_on(GREEN_LED_PORT, GREEN_LED_PIN);
+            led_on(BLUE_LED_PORT, BLUE_LED_PIN);
+            break;
+        }
+        case SUB_STATES_TOTAL:
+        default:
+        {
+            // bad state, reset to ALL_OFF
+            gl_en_app_sub_state = ALL_OFF;
+            break;
+        }
+    }
+
+    // switching complete - back to IDLE
+    gl_en_app_state = IDLE;
+}
+
+static void app_systick_cb(void)
+{
+    gl_en_app_state = TURNING_OFF;
 }
