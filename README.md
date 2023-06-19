@@ -10,10 +10,10 @@
 
 
 ## Quick Links
-- `Video` 👉 [Youtube](https://youtu.be/5NrU2kTSSLw)
-- `Project Hex` 👉 [Build/LED_Control.hex](Build/LED_Control.hex)
-- `Documentation` 👉 [Google Docs](https://docs.google.com/document/d/15XCq7KhCA17o89rHl8B3dAgSLqRwxgf1_SmRaluHrGM/edit?usp=sharing) 👉 PDF - uploading
-- `Team Backlog / Test Protocol` 👉 [Google Sheets](https://docs.google.com/spreadsheets/d/1hLTnshn1FoeaB7fPf3SfYW_tURnP0ARYbz8il4nLKLA/edit#gid=0) 👉 Excel File - uploading 
+- `Video` 👉 Youtube - in progress
+- `Project Hex` 👉 TBC
+- `Documentation` 👉 [Google Docs](https://docs.google.com/document/d/11W93RY6OmI8ad2eAT02Lx71EFzYXv_iCN_bzJ6KNIy0/edit?usp=sharing) 👉 PDF - uploading
+- `Team Backlog / Test Protocol` 👉 [Google Sheets](https://docs.google.com/spreadsheets/d/1NoLEc5Sk5aW1h5KqDCW50kSdbQppFpclcKfD8z8wE_4/edit?usp=sharing) 👉 Excel File - uploading 
 
 ----
 ## Requirements
@@ -24,13 +24,14 @@
 ### Software Requirements
 **The RGB LED is OFF initially**
 - Pressing SW1:
-  - After the first press, the Red led is on
-  - After the second press, the Green Led is on
-  - After the third press, the Blue led is on
-  - After the fourth press, all LEDs are on
+  - After the first press, the Red led is on for 1 second only
+  - After the second press, the Green Led is on for 1 second only
+  - After the third press, the Blue led is on for 1 second only
+  - After the fourth press, all LEDs are on for 1 second only
   - After the fifth press, should disable all LEDs
   - After the sixth press, repeat steps from 1 to 6
 ### Implement your drivers
 - Implement GPIO driver
 - Implement LED driver
 - Implement Button driver
+- Implement Systick driver
