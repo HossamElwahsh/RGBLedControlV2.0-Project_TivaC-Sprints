@@ -105,7 +105,7 @@
 // system clock.  You must set this to 1 if PWRDN (above) is set to 1.  Set
 // this to 0 if you are using the PLL.
 //
-#define CFG_RCC_BYPASS 0
+#define CFG_RCC_BYPASS 1
 
 //      <o> XTAL: Crystal Value
 //              < 0=>  0: 1.0000 MHz  (can not be used with PLL)
@@ -212,7 +212,7 @@
 // system clock.  You must set this to 1 if PWRDN2 (above) is set to 1.  Set
 // this to 0 if you are using the PLL.
 //
-#define CFG_RCC_BYPASS2 0
+#define CFG_RCC_BYPASS2 1
 
 //      <o> OSCSRC2: Oscillator Source
 //              <0=> 0: MOSC Main oscillator
@@ -597,10 +597,10 @@ void SystemInit (void)
 
     SYSCTL->RCC  = (RCC_Val  | (1<<11));                            /* set value with BYPASS */
 
-    if ( (((RCC_Val  & (1UL<<13)) == 0) && ((RCC2_Val & (1UL<<31)) == 0)) ||
-         (((RCC2_Val & (1UL<<13)) == 0) && ((RCC2_Val & (1UL<<31)) != 0))   ) {
-      while ((SYSCTL->RIS & (1UL<<6)) != (1UL<<6));                 /* wait until PLL is locked */
-    }
+    //if ( (((RCC_Val  & (1UL<<13)) == 0) && ((RCC2_Val & (1UL<<31)) == 0)) ||
+    //     (((RCC2_Val & (1UL<<13)) == 0) && ((RCC2_Val & (1UL<<31)) != 0))   ) {
+    //  while ((SYSCTL->RIS & (1UL<<6)) != (1UL<<6));                 /* wait until PLL is locked */
+    //}
 
     SYSCTL->RCC  = (RCC_Val);                                       /* set value */
     SYSCTL->RCC2 = (RCC2_Val);                                      /* set value */
