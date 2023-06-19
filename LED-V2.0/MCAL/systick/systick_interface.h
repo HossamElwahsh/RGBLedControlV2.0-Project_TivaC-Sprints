@@ -40,7 +40,7 @@ typedef enum{
 }en_systick_error_t;
 
 typedef void (*fun_systick_callback_t)(void);
-typedef void (*LED_Callback)(void);
+
 
 /*----------------------------------------------------------/
 /- STRUCTURES
