@@ -45,46 +45,46 @@ typedef enum
 /**
  * @brief                       :   Initializes LED on given port & pin
  *
- * @param[in]   en_led_port    :   LED Port
- * @param[in]   en_led_pin     :   LED Pin number in en_led_port
+ * @param[in]   en_a_led_port    :   LED Port
+ * @param[in]   en_a_led_pin     :   LED Pin number in en_a_led_port
  *
  * @return  LED_OK              :   In case of Successful Operation
  *          LED_ERROR           :   In case of Failed Operation
  */
-en_led_error_t_ led_init(en_led_port_t_ en_led_port, en_led_pin_t_ en_led_pin);   // initialize LED
+en_led_error_t_ led_init(en_led_port_t_ en_a_led_port, en_led_pin_t_ en_a_led_pin);   // initialize LED
 
 /**
  * @brief                       :   Turns on LED at given port/pin
  *
- * @param[in]   en_led_port    :   LED Port
- * @param[in]   en_led_pin     :   LED Pin number in en_led_port
+ * @param[in]   en_a_led_port    :   LED Port
+ * @param[in]   en_a_led_pin     :   LED Pin number in en_a_led_port
  *
  * @return  LED_OK              :   In case of Successful Operation
  *          LED_ERROR           :   In case of Failed Operation
  */
-en_led_error_t_ led_on(en_led_port_t_ en_led_port, en_led_pin_t_ en_led_pin);     // turn LED on
+en_led_error_t_ led_on(en_led_port_t_ en_a_led_port, en_led_pin_t_ en_a_led_pin);     // turn LED on
 
 /**
  * @brief                       :   Turns off LED at given port/pin
  *
- * @param[in]   en_led_port    :   LED Port
- * @param[in]   en_led_pin     :   LED Pin number in en_led_port
+ * @param[in]   en_a_led_port    :   LED Port
+ * @param[in]   en_a_led_pin     :   LED Pin number in en_a_led_port
  *
  * @return  LED_OK              :   In case of Successful Operation
  *          LED_ERROR           :   In case of Failed Operation
  */
-en_led_error_t_ led_off(en_led_port_t_ en_led_port, en_led_pin_t_ en_led_pin);    // turn LED off
+en_led_error_t_ led_off(en_led_port_t_ en_a_led_port, en_led_pin_t_ en_a_led_pin);    // turn LED off
 
 
 /**
  * @brief                       :   Toggles LED at given port/pin
  *
- * @param[in]   en_led_port    :   LED Port
- * @param[in]   en_led_pin     :   LED Pin number in en_led_port
+ * @param[in]   en_a_led_port    :   LED Port
+ * @param[in]   en_a_led_pin     :   LED Pin number in en_a_led_port
  *
  * @return  LED_OK              :   In case of Successful Operation
  *          LED_ERROR           :   In case of Failed Operation
  */
-en_led_error_t_ led_toggle(en_led_port_t_ en_led_port, en_led_pin_t_ en_led_pin); // toggle LED
+en_led_error_t_ led_toggle(en_led_port_t_ en_a_led_port, en_led_pin_t_ en_a_led_pin); // toggle LED
 
 #endif /* LED_H_ */
