@@ -200,7 +200,7 @@ en_systick_error_t systick_async_ms_delay(uint32_t_ uint32_ms_delay)
     return en_systick_error_retval;
 }
 
-en_systick_error_t systick_set_callback(fun_systick_cb fun_ptr_a_systick_cb)
+en_systick_error_t systick_set_callback(fun_systick_callback_t fun_ptr_a_systick_cb)
 {
     en_systick_error_t en_systick_error_retval = ST_OK;
 

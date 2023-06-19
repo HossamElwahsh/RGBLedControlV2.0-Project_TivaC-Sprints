@@ -39,7 +39,8 @@ typedef enum{
     ST_INVALID_ARGS             ,
 }en_systick_error_t;
 
-typedef void (*fun_systick_cb)(void);
+typedef void (*fun_systick_callback_t)(void);
+typedef void (*LED_Callback)(void);
 
 /*----------------------------------------------------------/
 /- STRUCTURES
@@ -57,7 +58,7 @@ typedef struct{
 
     en_systick_clk_src_t en_systick_clk_src;
 
-    fun_systick_cb fun_ptr_systick_cb;
+    fun_systick_callback_t fun_ptr_systick_cb;
 
 }st_systick_cfg_t;
 
@@ -107,7 +108,7 @@ en_systick_error_t systick_async_ms_delay(uint32_t_ uint32_ms_delay);
  *          ST_INVALID_ARGS    :    In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :    In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_set_callback(fun_systick_cb fun_ptr_systick_cb);
+en_systick_error_t systick_set_callback(fun_systick_callback_t fun_ptr_systick_cb);
 
 
 #endif //SYSTICK_INTERFACE_H
