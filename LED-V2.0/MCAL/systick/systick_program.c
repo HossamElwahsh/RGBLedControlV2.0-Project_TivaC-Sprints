@@ -97,7 +97,7 @@ en_systick_error_t systick_ms_delay(uint32_t_ uint32_ms_delay)
         uint32_t_ fl_no_of_cycles_req = 0;
         if(CLK_SRC_PIOSC == gl_ptr_st_systick_cfg->en_systick_clk_src)
         {
-            fl_ms_per_cycle = 1000.0f/((float)((PIOSC_MHZ/4.0f) * 1000000)); // PIOSC / 4
+            fl_ms_per_cycle = 1000.0f/((float)((PIOSC_MHZ/4.0f) * 1000000.0f)); // PIOSC / 4
             fl_no_of_cycles_req = ((float)uint32_ms_delay/fl_ms_per_cycle)+1;
         }
         else if(CLK_SRC_SYS_CLK == gl_ptr_st_systick_cfg->en_systick_clk_src)
