@@ -18,18 +18,18 @@ static st_systick_cfg_t * gl_ptr_st_systick_cfg;
 /**
  * @brief                      : Initializes SYSTICK driver
  *
- * @param ptr_st_systick_cfg   : Pointer to Systick Configuration
+ * @param ptr_a_st_systick_cfg   : Pointer to Systick Configuration
  *
  * @return  ST_OK              :   In case of Successful Operation
  *          ST_INVALID_ARGS    :   In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :   In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_init(st_systick_cfg_t * ptr_st_systick_cfg)
+en_systick_error_t systick_init(st_systick_cfg_t * ptr_a_st_systick_cfg)
 {
     en_systick_error_t en_systick_error_retval = ST_OK;
 
     // args/cfg check
-    if(NULL_PTR == ptr_st_systick_cfg)
+    if(NULL_PTR == ptr_a_st_systick_cfg)
     {
         en_systick_error_retval = ST_INVALID_ARGS;
     }
@@ -37,8 +37,8 @@ en_systick_error_t systick_init(st_systick_cfg_t * ptr_st_systick_cfg)
     {
         // cfg check
         if(
-//                (ptr_st_systick_cfg->bool_systick_int_enabled > TRUE) ||
-                (ptr_st_systick_cfg->en_systick_clk_src >= CLK_SRC_TOTAL)
+//                (ptr_a_st_systick_cfg->bool_systick_int_enabled > TRUE) ||
+                (ptr_a_st_systick_cfg->en_systick_clk_src >= CLK_SRC_TOTAL)
                 )
         {
             en_systick_error_retval = ST_INVALID_CONFIG;
@@ -53,10 +53,10 @@ en_systick_error_t systick_init(st_systick_cfg_t * ptr_st_systick_cfg)
             else
             {
                 // set clock source
-                WRITE_BIT(STCTRL, STCTRL_CLK_SRC, ptr_st_systick_cfg->en_systick_clk_src);
+                WRITE_BIT(STCTRL, STCTRL_CLK_SRC, ptr_a_st_systick_cfg->en_systick_clk_src);
 
                 // update globals
-                gl_ptr_st_systick_cfg = ptr_st_systick_cfg;
+                gl_ptr_st_systick_cfg = ptr_a_st_systick_cfg;
                 gl_systick_initialized = TRUE;
             }
         }
@@ -68,14 +68,14 @@ en_systick_error_t systick_init(st_systick_cfg_t * ptr_st_systick_cfg)
 /**
  * @brief                      : Initiates a sync blocking delay
  *
- * @param uint32_ms_delay      : Desired delay in ms
+ * @param uint32_a_ms_delay      : Desired delay in ms
  * @note                       : Will cancel any async delays
  *
  * @return  ST_OK              :   In case of Successful Operation
  *          ST_INVALID_ARGS    :   In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :   In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_ms_delay(uint32_t_ uint32_ms_delay)
+en_systick_error_t systick_ms_delay(uint32_t_ uint32_a_ms_delay)
 {
     en_systick_error_t en_systick_error_retval = ST_OK;
 
@@ -98,12 +98,12 @@ en_systick_error_t systick_ms_delay(uint32_t_ uint32_ms_delay)
         if(CLK_SRC_PIOSC == gl_ptr_st_systick_cfg->en_systick_clk_src)
         {
             fl_ms_per_cycle = 1000.0f/((float)((PIOSC_MHZ/4.0f) * 1000000.0f)); // PIOSC / 4
-            fl_no_of_cycles_req = ((float)uint32_ms_delay/fl_ms_per_cycle)+1;
+            fl_no_of_cycles_req = ((float)uint32_a_ms_delay / fl_ms_per_cycle) + 1;
         }
         else if(CLK_SRC_SYS_CLK == gl_ptr_st_systick_cfg->en_systick_clk_src)
         {
             fl_ms_per_cycle = 1000.0f/((float)(SYS_CLOCK_MHZ * 1000000.0f));
-            fl_no_of_cycles_req = ((float)uint32_ms_delay/fl_ms_per_cycle)+1;
+            fl_no_of_cycles_req = ((float)uint32_a_ms_delay / fl_ms_per_cycle) + 1;
         }
 
         // args check
@@ -137,14 +137,14 @@ en_systick_error_t systick_ms_delay(uint32_t_ uint32_ms_delay)
 /**
  * @brief                      : Initiates a sync blocking delay
  *
- * @param uint32_ms_delay      : Desired delay in ms
+ * @param uint32_a_ms_delay      : Desired delay in ms
  * @note                       : Will be cancelled if any sync/blocking delay was requested
  *
  * @return  ST_OK              :   In case of Successful Operation
  *          ST_INVALID_ARGS    :   In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :   In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_async_ms_delay(uint32_t_ uint32_ms_delay)
+en_systick_error_t systick_async_ms_delay(uint32_t_ uint32_a_ms_delay)
 {
     en_systick_error_t en_systick_error_retval = ST_OK;
 
@@ -166,12 +166,12 @@ en_systick_error_t systick_async_ms_delay(uint32_t_ uint32_ms_delay)
         if(CLK_SRC_PIOSC == gl_ptr_st_systick_cfg->en_systick_clk_src)
         {
             fl_ms_per_cycle = 1000.0f/((float)((PIOSC_MHZ/4.0f) * 1000000)); // PIOSC / 4
-            fl_no_of_cycles_req = ((float)uint32_ms_delay/fl_ms_per_cycle)+1;
+            fl_no_of_cycles_req = ((float)uint32_a_ms_delay / fl_ms_per_cycle) + 1;
         }
         else if(CLK_SRC_SYS_CLK == gl_ptr_st_systick_cfg->en_systick_clk_src)
         {
             fl_ms_per_cycle = 1000.0f/((float)(SYS_CLOCK_MHZ * 1000000.0f));
-            fl_no_of_cycles_req = ((float)uint32_ms_delay/fl_ms_per_cycle)+1;
+            fl_no_of_cycles_req = ((float)uint32_a_ms_delay / fl_ms_per_cycle) + 1;
         }
 
         // args check

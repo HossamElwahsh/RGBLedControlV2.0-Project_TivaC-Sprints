@@ -65,50 +65,50 @@ typedef struct{
 /**
  * @brief                       : Initializes SYSTICK driver
  *
- * @param ptr_st_systick_cfg        : Pointer to Systick Configuration
+ * @param ptr_a_st_systick_cfg        : Pointer to Systick Configuration
  *
  * @return  ST_OK              :   In case of Successful Operation
  *          ST_INVALID_ARGS    :   In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :   In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_init(st_systick_cfg_t * ptr_st_systick_cfg);
+en_systick_error_t systick_init(st_systick_cfg_t * ptr_a_st_systick_cfg);
 
 
 /**
  * @brief                      : Initiates a sync blocking delay
  *
- * @param uint32_ms_delay      : Desired delay in ms
+ * @param uint32_a_ms_delay      : Desired delay in ms
  *
  * @return  ST_OK              :   In case of Successful Operation
  *          ST_INVALID_ARGS    :   In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :   In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_ms_delay(uint32_t_ uint32_ms_delay);
+en_systick_error_t systick_ms_delay(uint32_t_ uint32_a_ms_delay);
 
 
 /**
  * @brief                      :    Initiates a sync blocking delay
  *
- * @param uint32_ms_delay      :    Desired delay in ms
+ * @param uint32_a_ms_delay      :    Desired delay in ms
  * @note                       :    Will be cancelled if any sync/blocking delay was requested
  *
  * @return  ST_OK              :    In case of Successful Operation
  *          ST_INVALID_ARGS    :    In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :    In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_async_ms_delay(uint32_t_ uint32_ms_delay);
+en_systick_error_t systick_async_ms_delay(uint32_t_ uint32_a_ms_delay);
 
 
 /**
  * @brief                      :    Sets callback function to be called when an async delay is finished
  *
- * @param fun_ptr_systick_cb   :    Pointer to callback fn
+ * @param fun_ptr_a_systick_cb   :    Pointer to callback fn
  *
  * @return  ST_OK              :    In case of Successful Operation
  *          ST_INVALID_ARGS    :    In case of Failed Operation (Invalid Arguments Given)
  *          ST_INVALID_CONFIG  :    In case of Failed Operation (Invalid Systick Config Given)
  */
-en_systick_error_t systick_set_callback(fun_systick_callback_t fun_ptr_systick_cb);
+en_systick_error_t systick_set_callback(fun_systick_callback_t fun_ptr_a_systick_cb);
 
 
 #endif //SYSTICK_INTERFACE_H
