@@ -48,7 +48,7 @@ typedef enum{
 #define USER_BTN_PORT		BTN_PORT_F // Port F
 #define USER_BTN_PIN		BTN_PIN_4
 
-
+#define LED_BLINK_DURATION  1000
 /*
  * Private Variables */
 static en_app_state_t gl_en_app_state = IDLE;
@@ -99,6 +99,9 @@ en_app_error_t app_init(void)
     en_systick_error = systick_init(&gl_st_systick_cfg_0);
     if(ST_OK != en_systick_error) en_app_error_retval = APP_FAIL;
 
+    en_systick_error = systick_set_callback(&app_systick_cb);
+    if(ST_OK != en_systick_error) en_app_error_retval = APP_FAIL;
+
     return en_app_error_retval;
 }
 
@@ -106,7 +109,6 @@ void app_start(void)
 {
     while(1)
     {
-
         en_btn_state_t_ en_btn_state = BTN_STATE_NOT_PRESSED;
         btn_read(&gl_st_user_btn_cfg, &en_btn_state);
 
@@ -143,7 +145,6 @@ void app_start(void)
             }
             case TURNING_OFF:
             {
-                // todo - improve
                 led_off(RED_LED_PORT, RED_LED_PIN);
                 led_off(GREEN_LED_PORT, GREEN_LED_PIN);
                 led_off(BLUE_LED_PORT, BLUE_LED_PIN);
@@ -175,18 +176,21 @@ static void app_switch_state(void)
         case RED_LED:
         {
             led_on(RED_LED_PORT, RED_LED_PIN);
+            systick_async_ms_delay(LED_BLINK_DURATION);
             break;
         }
         case GREEN_LED:
         {
             led_off(RED_LED_PORT, RED_LED_PIN);
             led_on(GREEN_LED_PORT, GREEN_LED_PIN);
+            systick_async_ms_delay(LED_BLINK_DURATION);
             break;
         }
         case BLUE_LED:
         {
             led_off(GREEN_LED_PORT, GREEN_LED_PIN);
             led_on(BLUE_LED_PORT, BLUE_LED_PIN);
+            systick_async_ms_delay(LED_BLINK_DURATION);
             break;
         }
         case ALL_LEDS:
@@ -194,6 +198,7 @@ static void app_switch_state(void)
             led_on(RED_LED_PORT, RED_LED_PIN);
             led_on(GREEN_LED_PORT, GREEN_LED_PIN);
             led_on(BLUE_LED_PORT, BLUE_LED_PIN);
+            systick_async_ms_delay(LED_BLINK_DURATION);
             break;
         }
         case SUB_STATES_TOTAL:
