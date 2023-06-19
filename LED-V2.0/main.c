@@ -23,7 +23,7 @@ int main(void)
 {
 
 #if TEST
-    void test_systick_sync();
+    //void test_systick_sync();
     void test_systick_async();
     return 0;
 #endif
