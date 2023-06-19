@@ -1,4 +1,4 @@
-# LED Control V1.0
+# LED Control V2.0
 #### ARM
 #### Author: Team 1 - Sub team A
 - #### Members:
