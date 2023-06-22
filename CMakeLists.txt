@@ -11,7 +11,7 @@ include_directories(LED-V2.0/HAL/btn)
 include_directories(LED-V2.0/LIB)
 include_directories(LED-V2.0/MCAL)
 include_directories(LED-V2.0/MCAL/gpio)
-include_directories(LED-V2.0/MCAL/systick)
+include_directories(LED-V2.0/LIB/systick)
 include_directories(LED-V2.0/RTE/_Target_1)
 
 add_executable(shared
@@ -29,5 +29,7 @@ add_executable(shared
         LED-V2.0/RTE/Device/TM4C123GH6PM/system_TM4C123.c
         LED-V2.0/led_interface.h
         LED-V2.0/main.c
-        LED-V2.0/MCAL/systick/systick_program.c
-        LED-V2.0/HAL/btn/btn_program.c LED-V2.0/MCAL/systick/systick_linking_config.c LED-V2.0/MCAL/systick/systick_linking_config.h)
+        LED-V2.0/LIB/systick/systick_program.c
+        LED-V2.0/HAL/btn/btn_program.c
+        LED-V2.0/LIB/systick/systick_linking_config.c
+        LED-V2.0/LIB/systick/systick_linking_config.h)
