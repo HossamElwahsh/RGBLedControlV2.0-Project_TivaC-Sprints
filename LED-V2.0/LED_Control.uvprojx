@@ -314,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -413,6 +413,16 @@
               <FileName>systick_program.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MCAL\systick\systick_program.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick_linking_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCAL\systick\systick_linking_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick_linking_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\MCAL\systick\systick_linking_config.h</FilePath>
             </File>
           </Files>
         </Group>

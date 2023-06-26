@@ -37,8 +37,8 @@
 #define GPIOPCTL(X)				*((volatile uint32_t_*)(GPIO_OFFSET(X)+0x52C))		/* GPIO Port Control */
 
 
-#define GPIO_INT_SENSE_MASK		1
-#define GPIO_INT_LEVEL_MASK		2
+#define GPIO_INT_SENSE_MASK		0
+#define GPIO_INT_LEVEL_MASK		1
 
 /** 
  ** @breif Function to validate the values of the given port and pin

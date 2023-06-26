@@ -9,6 +9,7 @@
 /- INCLUDES 
 /----------------------------------------------------------*/
 #include "systick_interface.h"
+#include "systick_linking_config.h"
 #include "gpio_interface.h"
 
 #include "btn_interface.h"
@@ -16,7 +17,7 @@
 /*---------------------------------------------------------/
 /- LOCAL MACROS
 /---------------------------------------------------------*/
-#define BTN_DEBOUNCE_DELAY			300 //in ms
+#define BTN_DEBOUNCE_DELAY			200 //in ms
 
 /*---------------------------------------------------------/
 /- FUNCTION IMPLEMENTATION
@@ -34,16 +35,12 @@ en_btn_status_code_t_ btn_init(st_btn_config_t_* ptr_st_btn_config)
 {
 	en_btn_status_code_t_ lo_en_btn_status = BTN_STATUS_OK;
 	st_gpio_cfg_t btn_pin_cfg;
-	st_systick_cfg_t lo_stk_cfg;
-	
+
 	if (NULL_PTR != ptr_st_btn_config)
 	{
 		btn_pin_cfg.port = (en_gpio_port_t) ptr_st_btn_config->en_btn_port;
 		btn_pin_cfg.pin  = (en_gpio_pin_t)  ptr_st_btn_config->en_btn_pin;
 		
-		lo_stk_cfg.bool_systick_int_enabled = FALSE;
-		lo_stk_cfg.en_systick_clk_src = CLK_SRC_PIOSC;
-
 		switch (ptr_st_btn_config->en_btn_pull_type)
 		{
 			case BTN_INTERNAL_PULL_UP	 :
@@ -59,7 +56,7 @@ en_btn_status_code_t_ btn_init(st_btn_config_t_* ptr_st_btn_config)
 		/* Initialize the button pin */
 		gpio_pin_init(&btn_pin_cfg);
 		
-		systick_init(&lo_stk_cfg);
+		systick_init(&gl_st_systick_cfg_0);
 		
 		/* Set the button state */
 		ptr_st_btn_config->en_btn_activation = BTN_ACTIVATED;
@@ -153,3 +150,57 @@ en_btn_status_code_t_ btn_read(st_btn_config_t_* ptr_st_btn_config, en_btn_state
 	return lo_en_btn_status;
 }
 
+/**
+* @brief Function to set a notification function when the given button is pressed
+*
+* @param ptr_str_btn_config            : pointer to the desired button structure
+* @param pv_btn_cbf                    : pointer to the notification function
+*
+* @return BTN_STATUS_OK                : When the operation is successful
+*         BTN_STATUS_INVALID_STATE     : Button structure and/or function pointers are NULL_PTRs
+*                                        or if the button is not connected to and EXI pin
+*         BTN_STATUS_INVALID_PULL_TYPE : If the pull type field in button structure is set to invalid value
+*/
+en_btn_status_code_t_ btn_set_notification(st_btn_config_t_* ptr_str_btn_config, void (*pv_btn_cbf)(void))
+{
+	en_btn_status_code_t_ lo_en_btn_status = BTN_STATUS_OK;
+	
+	if ((NULL_PTR != ptr_str_btn_config) && (NULL_PTR != pv_btn_cbf))
+	{
+		switch (ptr_str_btn_config->en_btn_pull_type)
+		{
+			case BTN_INTERNAL_PULL_UP:
+			case BTN_EXTERNAL_PULL_UP:
+			{
+				gpio_setIntSense((en_gpio_port_t) ptr_str_btn_config->en_btn_port,
+												 (en_gpio_pin_t)  ptr_str_btn_config->en_btn_pin ,
+												 FALLING_EDGE);
+				break;
+			}
+			
+			case BTN_EXTERNAL_PULL_DOWN:
+			{
+				gpio_setIntSense((en_gpio_port_t) ptr_str_btn_config->en_btn_port,
+												 (en_gpio_pin_t)  ptr_str_btn_config->en_btn_pin ,
+												 RISING_EDGE);
+				break;
+			}
+			default : lo_en_btn_status = BTN_STATUS_INVALID_PULL_TYPE;
+		}
+		
+		if(BTN_STATUS_OK == lo_en_btn_status)
+		{
+			gpio_setIntCallback((en_gpio_port_t) ptr_str_btn_config->en_btn_port,
+												  (en_gpio_pin_t)  ptr_str_btn_config->en_btn_pin ,
+													pv_btn_cbf);
+			gpio_enableInt((en_gpio_port_t) ptr_str_btn_config->en_btn_port,
+													(en_gpio_pin_t)  ptr_str_btn_config->en_btn_pin );
+		}
+	}
+	else
+	{
+		lo_en_btn_status = BTN_STATUS_INVALID_STATE;
+	}
+	
+	return lo_en_btn_status;
+}

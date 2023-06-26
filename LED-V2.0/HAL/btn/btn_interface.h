@@ -110,5 +110,17 @@ en_btn_status_code_t_ btn_deinit(st_btn_config_t_* ptr_st_btn_config);
  */
 en_btn_status_code_t_ btn_read(st_btn_config_t_* ptr_st_btn_config, en_btn_state_t_* ptr_en_btn_state);
 
+/**
+* @brief Function to set a notification function when the given button is pressed
+*
+* @param ptr_str_btn_config            : pointer to the desired button structure
+* @param pv_btn_cbf                    : pointer to the notification function
+*
+* @return BTN_STATUS_OK                : When the operation is successful
+*         BTN_STATUS_INVALID_STATE     : Button structure and/or function pointers are NULL_PTRs
+*                                        or if the button is not connected to and EXI pin
+*         BTN_STATUS_INVALID_PULL_TYPE : If the pull type field in button structure is set to invalid value
+*/
+en_btn_status_code_t_ btn_set_notification(st_btn_config_t_* ptr_str_btn_config, void (*pv_btn_cbf)(void));
 
 #endif /* BTN_INTERFACE_H_ */

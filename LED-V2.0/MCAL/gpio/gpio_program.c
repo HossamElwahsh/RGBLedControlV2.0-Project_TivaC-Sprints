@@ -418,7 +418,6 @@ en_gpio_error_t gpio_setIntSense(en_gpio_port_t en_a_port, en_gpio_pin_t en_a_pi
 			CLR_BIT(GPIOIM(en_a_port), en_a_pin);
 			
 			/* Configure the interrupt sense */
-			CLR_BIT(GPIOIS(en_a_port), en_a_pin);
 			if(GET_BIT(en_a_event, GPIO_INT_SENSE_MASK)) SET_BIT(GPIOIS(en_a_port), en_a_pin);
 			else CLR_BIT(GPIOIS(en_a_port), en_a_pin);
 			
@@ -429,7 +428,6 @@ en_gpio_error_t gpio_setIntSense(en_gpio_port_t en_a_port, en_gpio_pin_t en_a_pi
 			else
 			{
 				/* Configure the interrupt level */
-				CLR_BIT(GPIOIEV(en_a_port), en_a_pin);
 				if(GET_BIT(en_a_event, GPIO_INT_LEVEL_MASK)) SET_BIT(GPIOIEV(en_a_port), en_a_pin);
 				else CLR_BIT(GPIOIEV(en_a_port), en_a_pin);
 			}
@@ -473,7 +471,7 @@ en_gpio_error_t gpio_setIntCallback(en_gpio_port_t en_a_port, en_gpio_pin_t en_a
 {
 	en_gpio_error_t gpio_error_state;
 		
-	if(NULL_PTR == pv_a_cbf)
+	if(NULL_PTR != pv_a_cbf)
 	{
 		/* Validate the port and pin numbers */
 		gpio_error_state = port_pin_check(en_a_port, en_a_pin);
